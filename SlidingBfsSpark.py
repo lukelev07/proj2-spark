@@ -6,17 +6,18 @@ def press_map(data):
    # get children output list of them   
    if level == data[1]:
 	# form k,v pairs from children
-	res = [(k, level+1) for k in Sliding.children(WIDTH,HEIGHT,data[0])]
-	res.append(data)
-	return res
+	return [data] + [(k, level+1) for k in Sliding.children(WIDTH,HEIGHT,data[0])]
    else:
 	return [data]
+
 def bfs_map(value):
     """ YOUR CODE HERE """
     return (value[0], value[1])
+
 def bfs_reduce(value1, value2):
     """ YOUR CODE HERE """
     return min(value1,value2)
+
 def solve_sliding_puzzle(master, output, height, width):
     """
     Solves a sliding puzzle of the provided height and width.
@@ -47,6 +48,8 @@ def solve_sliding_puzzle(master, output, height, width):
     old_result = 1
     # loop until no more children
     while True:
+	if level % 4 == 0:
+		job = job.partitionBy(16)
         # do the map reduce
 	curr_job = job.flatMap(press_map).map(bfs_map).reduceByKey(bfs_reduce)
 	# check if no new children found
