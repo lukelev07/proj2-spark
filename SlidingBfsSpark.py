@@ -6,9 +6,11 @@ def press_map(data):
    # get children output list of them   
    if level == data[1]:
 	# form k,v pairs from children
-	return [data] + [(k, level+1) for k in Sliding.children(WIDTH,HEIGHT,data[0])]
+	res = [(k, level+1) for k in Sliding.children(WIDTH,HEIGHT,data[0])]
+	res.append(data)
+	return res
    else:
-	return data
+	return [data]
 def bfs_map(value):
     """ YOUR CODE HERE """
     return (value[0], value[1])
@@ -60,7 +62,6 @@ def solve_sliding_puzzle(master, output, height, width):
     sorts = sorted(curr_job.collect(), key=lambda l: l[1])
     for item in sorts:
 	output(str(item))
-    output(sorts)
     sc.stop()
 
 
