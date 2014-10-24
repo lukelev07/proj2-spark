@@ -64,7 +64,7 @@ def solve_sliding_puzzle(master, output, height, width):
     """ YOUR OUTPUT CODE HERE """
     sorts = sorted(curr_job.collect(), key=lambda l: l[1])
     for item in sorts:
-	output(str(item))
+	output(str(item[1]) + " " + str(item[0]))
     sc.stop()
 
 
