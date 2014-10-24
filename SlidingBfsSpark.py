@@ -1,10 +1,12 @@
 from pyspark import SparkContext
 import Sliding, argparse
 
+def flat_map(data):
+   """ YOUR CODE HERE """
+
 def bfs_map(value):
     """ YOUR CODE HERE """
-    pass # delete this line
-
+    return (value[0], value[1])
 def bfs_reduce(value1, value2):
     """ YOUR CODE HERE """
     pass # delete this line
