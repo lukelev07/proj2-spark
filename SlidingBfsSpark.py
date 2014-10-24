@@ -7,6 +7,8 @@ def press_map(data):
    if level == data[1]:
 	# form k,v pairs from children
 	return [data] + [(k, level+1) for k in Sliding.children(WIDTH,HEIGHT,data[0])]
+   else:
+	return data
 def bfs_map(value):
     """ YOUR CODE HERE """
     return (value[0], value[1])
@@ -40,21 +42,24 @@ def solve_sliding_puzzle(master, output, height, width):
     """ YOUR MAP REDUCE PROCESSING CODE HERE """
     # parallelize 
     job = sc.parallelize([(sol, level)])
-    old_result = None
+    old_result = 1
     # loop until no more children
     while True:
         # do the map reduce
 	curr_job = job.flatMap(press_map).map(bfs_map).reduceByKey(bfs_reduce)
 	# check if no new children found
-	if curr_job.count() == old_result:
+	num = curr_job.count()
+	if num == old_result:
 		break
-        old_result = curr_job.count()
+        old_result = num
         job = curr_job
         level += 1
     
 
     """ YOUR OUTPUT CODE HERE """
-    sorts = str(curr_job.collect())
+    sorts = sorted(curr_job.collect(), key=lambda l: l[1])
+    for item in sorts:
+	output(str(item))
     output(sorts)
     sc.stop()
 
