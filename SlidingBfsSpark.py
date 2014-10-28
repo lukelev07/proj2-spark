@@ -48,7 +48,7 @@ def solve_sliding_puzzle(master, output, height, width):
     old_result = 1
     # loop until no more children
     while True:
-	if level % 4 == 0:
+	if level % 8 == 0:
 		job = job.partitionBy(16)
         # do the map reduce
 	curr_job = job.flatMap(press_map).map(bfs_map).reduceByKey(bfs_reduce)
